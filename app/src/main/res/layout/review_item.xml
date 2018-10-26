@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="200dp"
+    android:layout_height="180dp"
+    android:elevation="3dp"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="0dp"
+    tools:targetApi="lollipop">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/auther_review_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_margin="5dp"
+            android:gravity="center_horizontal"
+            android:singleLine="true"
+            android:textStyle="bold"
+            tools:text="fathi" />
+
+        <TextView
+            android:id="@+id/content_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/auther_review_tv"
+            android:layout_marginEnd="3dp"
+            android:layout_marginStart="3dp"
+            android:minHeight="50dp"
+            tools:text="the content of comment that come" />
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>

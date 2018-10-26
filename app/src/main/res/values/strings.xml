@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Movie Guide</string>
+    <string name="action_setting">settings</string>
+    <string name="movie_title">Movie Title</string>
+    <string name="movie_overview">overview</string>
+    <string name="plot">Plot Synopsis</string>
+    <string name="user_rating">User Rating</string>
+    <string name="release_date">Release Date</string>
+    <string name="pref_sort_order_label">Sort Order</string>
+
+    <string name="pref_sort_order_key">sort_order</string>
+    <string name="pref_sort_order_popular">POPULAR</string>
+    <string name="pref_sort_order_top_rated">TOP RATED</string>
+    <string name="pref_sort_order_favorite">Favorite</string>
+</resources>
