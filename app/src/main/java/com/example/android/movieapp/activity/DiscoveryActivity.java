@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -43,7 +44,7 @@ import android.support.v7.preference.PreferenceManager;
 
 
 public class DiscoveryActivity extends AppCompatActivity
-        implements SharedPreferences.OnSharedPreferenceChangeListener {
+        implements SharedPreferences.OnSharedPreferenceChangeListener, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -65,6 +66,7 @@ public class DiscoveryActivity extends AppCompatActivity
 
     int columns;
     private ProgressDialog mProgressDialog;
+    SharedPreferences sharedPreferences;
 
 
     @Override
@@ -72,24 +74,18 @@ public class DiscoveryActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_descovery_screen);
         ButterKnife.bind(this);
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
-
-
         configChanged();
-
-
-       setUpRecyclerview();
+        setUpRecyclerview();
         setupSharedPreferences(sharedPreferences);
-
-
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        refreshLayout.setOnRefreshListener(this);
 
     }
 
     private void setUpRecyclerview() {
-        adapter=new MovieAdapter(this,movieData);
+        adapter = new MovieAdapter(this, movieData);
         mGridLayoutManager = new GridLayoutManager(this, columns);
         recyclerView.setLayoutManager(mGridLayoutManager);
         recyclerView.setHasFixedSize(true);
@@ -126,7 +122,7 @@ public class DiscoveryActivity extends AppCompatActivity
                         movieData.clear();
                         movieData.addAll(movieList);
                         updateAdapterData(movieData);
-                        Log.e("popsize",""+movieData.size());
+                        Log.e("popsize", "" + movieData.size());
                     }
                     hideLoading();
                 }
@@ -153,7 +149,7 @@ public class DiscoveryActivity extends AppCompatActivity
 
     private void loadJSONTopRated() {
 
-showLoading();
+        showLoading();
         try {
 
             MovieService apiService =
@@ -254,7 +250,6 @@ showLoading();
                 }
 
 
-
             }
         });
 
@@ -283,24 +278,24 @@ showLoading();
         String prefValue = sharedPreferences.getString(this.getString(R.string.pref_sort_order_key),
                 this.getString(R.string.pref_sort_order_popular));
         if (prefValue.equals(this.getString(R.string.pref_sort_order_popular))) {
-            Log.e("pop","pop");
+            Log.e("pop", "pop");
 
             loadJSONMostPopular();
         } else if (prefValue.equals(this.getString(R.string.pref_sort_order_top_rated))) {
 
             loadJSONTopRated();
-            Log.e("top","top");
+            Log.e("top", "top");
 
         } else {
 
             displayFavorites();
-            Log.e("dis","dis");
+            Log.e("dis", "dis");
 
         }
 
     }
 
-    public void updateAdapterData(ArrayList<Movie> movieData){
+    public void updateAdapterData(ArrayList<Movie> movieData) {
         adapter.updateMovieList(movieData);
 
     }
@@ -316,5 +311,20 @@ showLoading();
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.cancel();
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+
+            @Override public void run() {
+
+                refreshLayout.setRefreshing(false);
+                setupSharedPreferences(sharedPreferences);
+
+            }
+
+        }, 2000);
+
     }
 }

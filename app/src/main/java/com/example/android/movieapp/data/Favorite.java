@@ -2,7 +2,9 @@ package com.example.android.movieapp.data;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.PrimaryKey;
+import android.icu.text.Replaceable;
 import android.support.annotation.NonNull;
 
 /**
@@ -11,10 +13,8 @@ import android.support.annotation.NonNull;
 @Entity(tableName = "favorite")
 public class Favorite {
 
-    @PrimaryKey(autoGenerate = true)
-    @NonNull
-    private int id;
 
+    @PrimaryKey()
     private int movieid;
 
     private String title;
@@ -29,7 +29,7 @@ public class Favorite {
 
     private String releaseDate;
 
-    @Ignore
+
     public Favorite(int movieid, String title, String rating, String poster, String overview, String backdrop, String releaseDate) {
         this.movieid = movieid;
         this.title = title;
@@ -40,29 +40,29 @@ public class Favorite {
         this.releaseDate = releaseDate;
     }
 
-    public Favorite(@NonNull int id, int movieid, String title, String rating, String poster, String overview, String backdrop, String releaseDate) {
-        this.id = id;
-        this.movieid = movieid;
-        this.title = title;
-        this.rating = rating;
-        this.poster = poster;
-        this.overview = overview;
-        this.backdrop = backdrop;
-        this.releaseDate = releaseDate;
-    }
+//    public Favorite(@NonNull int id, int movieid, String title, String rating, String poster, String overview, String backdrop, String releaseDate) {
+//        this.id = id;
+//        this.movieid = movieid;
+//        this.title = title;
+//        this.rating = rating;
+//        this.poster = poster;
+//        this.overview = overview;
+//        this.backdrop = backdrop;
+//        this.releaseDate = releaseDate;
+//    }
 
     @Ignore
     public Favorite() {
     }
 
-    @NonNull
-    public int getId() {
-        return id;
-    }
-
-    public void setId(@NonNull int id) {
-        this.id = id;
-    }
+//    @NonNull
+//    public int getId() {
+//        return id;
+//    }
+//
+//    public void setId(@NonNull int id) {
+//        this.id = id;
+//    }
 
     public int getMovieid() {
         return movieid;

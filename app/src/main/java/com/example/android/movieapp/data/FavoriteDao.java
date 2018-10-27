@@ -22,7 +22,7 @@ public interface FavoriteDao {
     @Query("SELECT * FROM favorite WHERE title = :title")
     List<Favorite> loadAll(String title);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertFavorite(Favorite favorite);
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
